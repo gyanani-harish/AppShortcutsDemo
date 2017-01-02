@@ -5,7 +5,9 @@ import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -20,7 +22,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            nougatShortcuts();
+        }
+    }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
+    private void nougatShortcuts() {
         final ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
 
         ShortcutInfo webShortcut = new ShortcutInfo.Builder(this, "shortcut_web")
